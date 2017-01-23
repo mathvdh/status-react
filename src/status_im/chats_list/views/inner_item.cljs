@@ -48,7 +48,7 @@
 
 (defview message-status [{:keys [chat-id contacts]}
                          {:keys [message-id message-status user-statuses message-type outgoing] :as msg}]
-  [app-db-message-status-value [:get-in [:message-statuses message-id :status]]]
+  [app-db-message-status-value [:get-in [:message-data :statuses message-id :status]]]
   (let [delivery-status (get-in user-statuses [chat-id :status])]
     (when (and outgoing
                (or (some #(= (keyword %) :seen) [delivery-status

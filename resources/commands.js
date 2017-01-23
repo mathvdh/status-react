@@ -877,24 +877,23 @@ status.command({
         name: "amount",
         type: status.types.NUMBER
     }],
-    preview: function (params) {
-        return status.components.text(
-            {},
-            params.amount + " ETH"
-        );
-    },
     handler: function (params) {
         return {
             event: "request",
             params: [params.amount],
             request: {
                 command: "send",
+                contentCommand: "request",
                 params: {
                     amount: params.amount
-                },
-                content: I18n.t('request_requesting') + params.amount + "ETH"
+                }
             }
         };
+    },
+    preview: function (params) {
+        return I18n.t('request_requesting')
+            + I18n.toNumber(params.amount, {precision: 10, strip_insignificant_zeros: true})
+            + " ETH";
     },
     validator: function(params) {
         try {
